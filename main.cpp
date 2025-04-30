@@ -191,7 +191,6 @@ void monitor_and_infect(pcap_t* pcap, const std::vector<flow>& flows, const Mac&
             if (ntohs(arp->arp_.op_) != ArpHdr::Request) continue;
 
             for (const flow& f : flows) {
-                // 💡 sender가 broadcast로 ARP 요청하면 감지
                 if (eth_hdr->smac_ == f.sm && eth_hdr->dmac_ == Mac::broadcastMac()) {
                     printf("[MONITOR] Sender %s is recovering via broadcast → Re-infecting\n",
                            std::string(f.sip).c_str());
